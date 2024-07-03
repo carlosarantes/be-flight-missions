@@ -10,6 +10,7 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     restart: unless-stopped
     environment:
+      MYSQL_DATABASE: 'flightmissions'
       MYSQL_ROOT_PASSWORD: root
     ports:
       - 3306:3306
@@ -22,6 +23,8 @@ services:
   nestjs-app:
     container_name: nestjs-app
     depends_on:
+      - mysql-db
+    links:
       - mysql-db
     build: .
     restart: unless-stopped
